@@ -102,8 +102,16 @@ namespace Xadrez.Entities
             {
                 xeque = false;
             }
-            turno++;
-            MudaJogador();
+
+            if (TesteXequeMate(Adversaria(jogadorAtual)))
+            {
+                terminada = true;
+            }
+            else
+            {
+                turno++;
+                MudaJogador();
+            }
         }
 
         private void MudaJogador()
@@ -195,13 +203,46 @@ namespace Xadrez.Entities
             return false;
         }
 
+        public bool TesteXequeMate(Cor cor)
+        {
+            if (!EstarEmXeque(cor))
+            {
+                return false;
+            }
+
+            foreach (Peca peca in PecasEmJogo(cor)) 
+            {
+                bool[,] mat = peca.MovimentosPossiveis();
+                for(int i = 0; i < tab.Linhas; i++)
+                {
+                    for(int j = 0; j < tab.Colunas; j++)
+                    {
+                        if(mat[i, j])
+                        {
+                            Posicao origem = peca.Posicao;
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = ExecutaMovimento(origem, destino);
+                            bool testeXeque = EstarEmXeque(cor);
+                            DesfazMovimento(origem, destino, pecaCapturada);
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         private void ColocarPecas()
         {
-            ColocarNovaPeca('a', 8, new Torre(tab, Cor.PRETO));
-            //ColocarNovaPeca('b', 8, new Cavalo(tab, Cor.PRETO));
+            ColocarNovaPeca('b', 8, new Torre(tab, Cor.PRETO));
             //ColocarNovaPeca('c', 8, new Bispo(tab, Cor.PRETO));
+            //ColocarNovaPeca('b', 8, new Cavalo(tab, Cor.PRETO));
             //ColocarNovaPeca('d', 8, new Rainha(tab, Cor.PRETO));
-            ColocarNovaPeca('e', 8, new Rei(tab, Cor.PRETO, this));
+            ColocarNovaPeca('a', 8, new Rei(tab, Cor.PRETO, this));
             //ColocarNovaPeca('f', 8, new Bispo(tab, Cor.PRETO));
             //ColocarNovaPeca('g', 8, new Cavalo(tab, Cor.PRETO));
             //ColocarNovaPeca('h', 8, new Torre(tab, Cor.PRETO));
@@ -215,14 +256,14 @@ namespace Xadrez.Entities
             //ColocarNovaPeca('g', 7, new Peao(tab, Cor.PRETO));
             //ColocarNovaPeca('h', 7, new Peao(tab, Cor.PRETO));
 
-            ColocarNovaPeca('a', 1, new Torre(tab, Cor.BRANCO));
+            ColocarNovaPeca('h', 7, new Torre(tab, Cor.BRANCO));
             //ColocarNovaPeca('b', 1, new Cavalo(tab, Cor.BRANCO));
             //ColocarNovaPeca('c', 1, new Bispo(tab, Cor.BRANCO));
             //ColocarNovaPeca('d', 1, new Rainha(tab, Cor.BRANCO));
             ColocarNovaPeca('e', 1, new Rei(tab, Cor.BRANCO, this));
             //ColocarNovaPeca('f', 1, new Bispo(tab, Cor.BRANCO));
             //ColocarNovaPeca('g', 1, new Cavalo(tab, Cor.BRANCO));
-            ColocarNovaPeca('h', 1, new Torre(tab, Cor.BRANCO));
+            ColocarNovaPeca('b', 1, new Torre(tab, Cor.BRANCO));
 
             //ColocarNovaPeca('a', 2, new Peao(tab, Cor.BRANCO));
             //ColocarNovaPeca('b', 2, new Peao(tab, Cor.BRANCO));

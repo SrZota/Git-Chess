@@ -7,9 +7,10 @@ namespace Xadrez.Entities
 {
     class Rei : Peca
     {
-        public Rei(Tabuleiro tab, Cor cor) : base(tab, cor)
+        private PartidaXadrez partida;
+        public Rei(Tabuleiro tab, Cor cor, PartidaXadrez partida) : base(tab, cor)
         {
-
+            this.partida = partida;
         }
 
         private bool PodeMover(Posicao pos)

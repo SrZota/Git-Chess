@@ -165,7 +165,7 @@ namespace Xadrez.Entities
 
         public void RealizaJogada(Posicao origem, Posicao destino)
         {
-            Peca pecaCapturada =  ExecutaMovimento(origem, destino);
+            Peca pecaCapturada = ExecutaMovimento(origem, destino);
 
             if (EstarEmXeque(jogadorAtual))
             {
@@ -195,13 +195,26 @@ namespace Xadrez.Entities
             }
 
             //Jogada En Passant
-            if(p is Peao &&(destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
+            if (p is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
             {
                 vulnevarelEnPassant = p;
             }
             else
             {
                 vulnevarelEnPassant = null;
+            }
+
+            // #jogadaespecial promocao
+            if (p is Peao)
+            {
+                if ((p.Cor == Cor.BRANCO && destino.Linha == 0) || (p.Cor == Cor.PRETO && destino.Linha == 7))
+                {
+                    p = tab.RetirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca dama = new Rainha(tab, p.Cor);
+                    tab.ColocarPeca(dama, destino);
+                    pecas.Add(dama);
+                }
             }
         }
 

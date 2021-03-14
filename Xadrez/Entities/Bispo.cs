@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Xadrez.Entity
+namespace Xadrez.Entities
 {
-    class Rainha
+    class Bispo
     {
     }
 }

@@ -8,7 +8,6 @@ namespace Xadrez
     {
         static void Main(string[] args)
         {
-            /*
             try
             {
                 Tabuleiro tab = new Tabuleiro(8, 8);
@@ -46,13 +45,7 @@ namespace Xadrez
 
                 Console.WriteLine(e.Message);
             }
-            */
-
-            PosicaoXadrez pos = new PosicaoXadrez('c', 7);
-
             
-            Console.WriteLine(pos);
-            Console.WriteLine(pos.ToPosicao());
         }
     }
 }

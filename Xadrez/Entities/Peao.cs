@@ -24,19 +24,38 @@ namespace Xadrez.Entities
 
             Posicao pos = new Posicao(0, 0);
 
-            //Acima
-            if(QtdMovimentos == 0)
-            {
-                pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna);
+            if(Tab.Peca(pos).Cor == Cor) {
+                //Acima
+                if (QtdMovimentos == 0)
+                {
+                    pos.DefinirValores(Posicao.Linha + 2, Posicao.Coluna);
+                    if (Tab.PosicaoValida(pos) && PodeMover(pos))
+                    {
+                        mat[pos.Linha, pos.Coluna] = true;
+                    }
+                }
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
                 if (Tab.PosicaoValida(pos) && PodeMover(pos))
                 {
                     mat[pos.Linha, pos.Coluna] = true;
                 }
             }
-            pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
-            if (Tab.PosicaoValida(pos) && PodeMover(pos))
+            else
             {
-                mat[pos.Linha, pos.Coluna] = true;
+                //Acima
+                if (QtdMovimentos == 0)
+                {
+                    pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna);
+                    if (Tab.PosicaoValida(pos) && PodeMover(pos))
+                    {
+                        mat[pos.Linha, pos.Coluna] = true;
+                    }
+                }
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+                if (Tab.PosicaoValida(pos) && PodeMover(pos))
+                {
+                    mat[pos.Linha, pos.Coluna] = true;
+                }
             }
             return mat;
         }

@@ -20,9 +20,14 @@ namespace tabuleiro
         public Tabuleiro(int linhas, int colunas)
         {
             this.Linhas = linhas;
-            this.Colunas = Colunas;
+            this.Colunas = colunas;
             pecas = new Peca
                 [linhas, colunas];
+        }
+
+        public Peca peca(int linha, int coluna)
+        {
+            return pecas[linha, coluna];
         }
     }
 }
